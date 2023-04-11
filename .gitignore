@@ -1,0 +1,7 @@
+*~
+*live
+*bin/
+*.d
+*.o
+*.a
+*.vscode/
