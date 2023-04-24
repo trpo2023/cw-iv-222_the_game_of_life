@@ -1,10 +1,16 @@
-#include "logic.h"
-#include "graphic.h"
+#include <inttypes.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/time.h>
 
-double wtime() {
-  struct timeval t;
-  gettimeofday(&t, NULL);
-  return (double)t.tv_sec + (double)t.tv_usec * 1E-6;
+#include <liblive/logic.h>
+
+double wtime()
+{
+    struct timeval t;
+    gettimeofday(&t, NULL);
+    return (double)t.tv_sec + (double)t.tv_usec * 1E-6;
 }
 
 // Вывод игрового поля
@@ -21,7 +27,7 @@ void print_field(Grid grid)
     double time = wtime() - start;
     printf("\t\t\tВремя вывода игрового поля: %lf\n", time);
 }
-   
+
 //Количество живых клеток на игровом поле
 int get_live_count(Grid grid)
 {
