@@ -8,5 +8,5 @@ typedef struct Grid {
 } Grid;
 
 Grid init_grid(uint32_t width, uint32_t height);
-void rand_grind(Grid grid);
+void rand_grid(Grid grid);
 void free_grid(Grid grid);

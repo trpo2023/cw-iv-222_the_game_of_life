@@ -22,7 +22,7 @@ Grid init_grid(uint32_t width, uint32_t height)
     return grid;
 }
 
-void rand_grind(Grid grid)
+void rand_grid(Grid grid)
 {
     for (uint32_t i = 0; i < grid.height; i++) {
         for (uint32_t j = 0; j < grid.height; j++) {

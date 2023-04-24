@@ -7,7 +7,7 @@
 int main()
 {
     Grid grid = init_grid(50, 50);
-    rand_grind(grid);
+    rand_grid(grid);
 
     print_field(grid, '*');
     int count_live_cells = get_live_count(grid);
