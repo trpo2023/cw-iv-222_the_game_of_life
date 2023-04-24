@@ -16,7 +16,8 @@ int main()
         }
         printf("\n");
     }
-
+    int count_live_cells = get_live_count(grid);
+    printf("\t\t\tКоличество живых клнток: %d\n", count_live_cells)
     free_grid(grid);
     return 0;
 }
