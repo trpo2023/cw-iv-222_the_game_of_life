@@ -14,13 +14,16 @@ double wtime()
 }
 
 // Вывод игрового поля
-void print_field(Grid grid)
+void print_field(Grid grid, char symbol)
 {
     double start = wtime();
     printf("Hello World %d %d %p\n", grid.height, grid.width, grid.field);
     for (uint32_t i = 0; i < grid.height; i++) {
         for (uint32_t j = 0; j < grid.width; j++) {
-            printf("%d ", grid.field[i][j]);
+            if(grid.field[i][j])
+                printf("%c ", symbol);
+            else    
+                printf("  ");
         }
         printf("\n");
     }
