@@ -8,15 +8,10 @@ int main()
 {
     Grid grid = init_grid(50, 50);
     rand_grind(grid);
-    printf("Hello World %d %d %p\n", grid.height, grid.width, grid.field);
 
-    for (uint32_t i = 0; i < grid.height; i++) {
-        for (uint32_t j = 0; j < grid.width; j++) {
-            printf("%d ", grid.field[i][j]);
-        }
-        printf("\n");
-    }
-
+    print_field(grid, '*');
+    int count_live_cells = get_live_count(grid);
+    printf("\t\t\tКоличество живых клнток: %d\n", count_live_cells);
     free_grid(grid);
     return 0;
 }
