@@ -22,6 +22,38 @@ Grid init_grid(uint32_t width, uint32_t height)
     return grid;
 }
 
+int count_neighbors(Grid grid, int row, int column)
+{
+    int count = 0;
+    for (int r = row - 1; r <= row + 1; r++) {
+        for (int c = column - 1; c <= column + 1; c++) {
+            if (r == row && c == column)
+                continue;
+            if (r >= 0 && r < grid.height && c >= 0 && c < grid.width) {
+                if (grid.field[r][c] == 1)
+                    count++;
+            }
+        }
+    }
+    return count;
+}
+
+int check_rules(Grid grid, int row, int column)
+{
+    int count = count_neighbors(grid, row, column);
+    int status = grid.field[row][column];
+
+    if (status) {
+        if (count >= 2 && count <= 3)
+            return 1;
+        else
+            return 0;
+    }
+    if (count == 3)
+        return 1;
+    return 0;
+}
+
 void rand_grid(Grid grid)
 {
     for (uint32_t i = 0; i < grid.height; i++) {
