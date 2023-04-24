@@ -1,3 +1,4 @@
+#pragma once
 #include <liblive/logic.h>
 
 double wtime();
