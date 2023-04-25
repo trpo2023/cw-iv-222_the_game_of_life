@@ -1,10 +1,8 @@
-#include <inttypes.h>
 #include <stdint.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <sys/time.h>
 
-#include <liblive/logic.h>
+#include <liblive/graphic.h>
 
 double wtime()
 {

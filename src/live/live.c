@@ -29,7 +29,7 @@ int main()
         system("clear");
         print_field(grid, '*');
         count_live_cells = get_live_count(grid);
-        printf("\n\t\t\tКоличество живых клнток: %d\n\n\t\t\tПовторов: %d\n",
+        printf("\n\t\t\tКоличество живых клеток: %d\n\n\t\t\tПовторов: %d\n",
                count_live_cells,
                count);
         update_grid(grid, tmp);

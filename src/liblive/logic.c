@@ -7,7 +7,7 @@
 Grid init_grid(uint32_t rows, uint32_t columns)
 {
     bool** field = (bool**)malloc(sizeof(bool*) * rows);
-    for (uint32_t i = 0; i < columns && field; i++) {
+    for (uint32_t i = 0; i < rows && field; i++) {
         field[i] = (bool*)calloc(sizeof(bool), columns);
         if (!field[i]) {
             for (uint32_t j = 0; j < i; j++) {
