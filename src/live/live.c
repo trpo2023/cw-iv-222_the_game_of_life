@@ -14,6 +14,7 @@ int main()
     int old_count_live = 0;
     int count_live_cells = get_live_count(grid);
     int count = 0;
+    int iterations = 0;
 
     while (true) {
         if (old_count_live == count_live_cells)
@@ -29,12 +30,15 @@ int main()
         system("clear");
         print_field(grid, '*');
         count_live_cells = get_live_count(grid);
-        printf("\n\t\t\tКоличество живых клеток: %d\n\n\t\t\tПовторов: %d\n",
+        printf("\n\t\t\tКоличество живых клеток: %d\n\n\t\t\tПовторов: "
+               "%d\n\n\t\t\tИтераций: %d\n",
                count_live_cells,
-               count);
+               count,
+               iterations);
         update_grid(grid, tmp);
         old_count_live = get_live_count(grid);
         usleep(100000);
+        iterations++;
     }
 
     return 0;
