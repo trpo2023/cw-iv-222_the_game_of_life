@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include <liblive/logic.h>
 
@@ -75,6 +76,7 @@ void update_grid(Grid grid, Grid tmp)
 
 void rand_grid(Grid grid)
 {
+    srand(time(NULL));
     for (uint32_t i = 0; i < grid.rows; i++) {
         for (uint32_t j = 0; j < grid.columns; j++) {
             grid.field[i][j] = rand() % 2;
