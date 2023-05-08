@@ -4,6 +4,9 @@ LIB_NAME = liblive
 CFLAGS = -Wall -Wextra -Werror
 CPPFLAGS = -I src -MP -MMD
 
+LDFLAGS =
+LDLIBS = -lncurses
+
 BIN_DIR = bin
 OBJ_DIR = obj
 SRC_DIR = src
