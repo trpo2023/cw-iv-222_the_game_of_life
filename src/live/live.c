@@ -49,13 +49,18 @@ int main()
             break;
         }
         getmaxyx(stdscr, y, x); // получаем размер окна (стандартный экран)
-        mvprintw(0, 0, "console size: %d %d     ", y, x); // выводим размер консоли
+        mvprintw(
+                0,
+                0,
+                "console size: %d %d     ",
+                y,
+                x); // выводим размер консоли
     }
 
     // Очистка ncurses и завершение программы
     endwin();
     return 0;
-    
+
     Grid grid = init_grid(35, 80);
     Grid tmp = init_grid(grid.rows, grid.columns);
     rand_grid(grid);
