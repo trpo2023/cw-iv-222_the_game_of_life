@@ -5,5 +5,4 @@
 CTEST(LOGIC_TEST, test)
 {
     ASSERT_EQUAL(0, 0);
-
 }
