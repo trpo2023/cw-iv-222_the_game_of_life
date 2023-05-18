@@ -64,14 +64,16 @@ void merge_grid(Grid from_where, Grid to_here)
     }
 }
 
-void update_grid(Grid grid, Grid tmp)
+void update_grid(Grid grid)
 {
+    Grid tmp = init_grid(grid.rows, grid.columns);
     for (uint32_t row = 0; row < grid.rows; row++) {
         for (uint32_t column = 0; column < grid.columns; column++) {
             tmp.field[row][column] = check_rules(grid, row, column);
         }
     }
     merge_grid(tmp, grid);
+    free_grid(tmp);
 }
 
 void rand_grid(Grid grid)
