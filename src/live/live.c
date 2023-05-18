@@ -35,7 +35,43 @@ int main()
     GameThread th_arg = {&game, grid};
     pthread_create(&th_game, NULL, start_game, &th_arg);
 
-    // Очистка ncurses и завершение программы
-    endwin();
+    while (true) {
+        if (game.pressed == 1) {
+            switch (game.btn) {
+            case B_START:
+                game.pressed = 0;
+                game.location = L_GAME;
+                game.btn = B_RESTART;
+                break;
+            case B_SETTINGS:
+                game.pressed = 0;
+                break;
+            case B_RESTART:
+                game.pressed = 0;
+                rand_grid(grid);
+                break;
+            case B_BACK:
+                game.pressed = 0;
+                game.location = L_MENU;
+                game.btn = B_START;
+                break;
+            case B_EXIT:
+                /*/ Очистка ncurses и завершение программы /*/
+                free_grid(grid);
+                pthread_join(th_input, NULL);
+                pthread_join(th_game, NULL);
+                endwin();
+                return 0;
+            default:
+                break;
+            }
+        }
+        clear();
+        draw_btns(&game);
+        print_filed_v2(grid, '*');
+        refresh();
+        usleep(100000);
+    }
+
     return 0;
 }
