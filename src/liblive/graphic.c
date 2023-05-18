@@ -42,3 +42,4 @@ int get_live_count(Grid grid)
     }
     return count;
 }
+
