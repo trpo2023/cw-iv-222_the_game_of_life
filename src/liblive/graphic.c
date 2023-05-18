@@ -119,3 +119,73 @@ void draw_btns(GameStatus* game)
         mvprintw(center_row + i, center, "%s", btns[i].name);
     }
 }
+
+
+void* input_thread(void* arg)
+{
+    GameStatus* game = (GameStatus*)arg;
+    int columns, rows;
+    int ch;
+    MEVENT event;
+    while ((ch = getch()) != KEY_F(1)) {
+        switch (ch) {
+        case KEY_DOWN:
+        case KEY_UP:
+            switch (game->location) {
+            case L_MENU:
+                if (ch == KEY_UP && (game->btn > B_START)
+                    && (game->btn <= B_EXIT))
+                    game->btn -= 1;
+                if (ch == KEY_DOWN && (game->btn >= B_START)
+                    && (game->btn < B_EXIT))
+                    game->btn += 1;
+                break;
+            case L_GAME:
+                if (ch == KEY_UP && (game->btn > B_RESTART)
+                    && (game->btn <= B_BACK))
+                    game->btn -= 1;
+                if (ch == KEY_DOWN && (game->btn >= B_RESTART)
+                    && (game->btn < B_BACK))
+                    game->btn += 1;
+                break;
+            case L_SETTINGS:
+                if (ch == KEY_UP && (game->btn > B_BACK)
+                    && (game->btn <= B_SAVE))
+                    game->btn -= 1;
+                if (ch == KEY_DOWN && (game->btn >= B_BACK)
+                    && (game->btn < B_SAVE))
+                    game->btn += 1;
+                break;
+
+            default:
+                break;
+            }
+            break;
+        case '\n':
+            game->pressed = 1;
+            if (game->location == L_MENU && game->btn == B_EXIT)
+                return 0;
+            break;
+        case KEY_ESC:
+            game->location = L_MENU;
+            game->btn = B_EXIT;
+            game->pressed = 1;
+            return 0;
+        case KEY_MOUSE:
+            getmouse(&event);
+            // int x = event.x;
+            // int y = event.y;
+            break;
+        default:
+            break;
+        }
+        getmaxyx(
+                stdscr,
+                rows,
+                columns); // получаем размер окна (стандартный экран)
+        game->rows = rows;
+        game->columns = columns - MENU_SIZE;
+        refresh();
+    }
+    return 0;
+}
