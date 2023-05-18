@@ -1,8 +1,12 @@
+#include <liblive/graphic.h>
+#include <ncurses.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <sys/time.h>
-
-#include <liblive/graphic.h>
+#include <time.h>
+#include <unistd.h>
 
 double wtime()
 {
@@ -58,11 +62,6 @@ void create_menu(GameStatus* game)
     for (int row = 0; row < game->rows; row++) {
         mvprintw(row, game->columns, "|");
     }
-}
-
-int get_center(int size, char* str)
-{
-    return size / 2 - strlen(str) / 2;
 }
 
 int get_center(int size, char* str)

@@ -1,26 +1,25 @@
-#include <ncurses.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-
 #include <liblive/graphic.h>
 #include <liblive/logic.h>
+#include <ncurses.h>
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
 #define KEY_ESC 27
 
 int main()
 {
-    // Инициализация ncurses
+    /*/  Инициализация ncurses /*/
     initscr();
     cbreak();
     noecho();
     keypad(stdscr, TRUE);
     mousemask(ALL_MOUSE_EVENTS, NULL);
-
-    // Включение режима отображения координат мыши
+    /*/ Включение режима отображения координат мыши /*/
     mouseinterval(0);
     curs_set(0);
-
     /*/ Инициализация переменных /*/
     pthread_t th_input, th_game;
     int rows, columns;
@@ -34,7 +33,6 @@ int main()
     /*/ создаем поток для игры /*/
     GameThread th_arg = {&game, grid};
     pthread_create(&th_game, NULL, start_game, &th_arg);
-
     while (true) {
         if (game.pressed == 1) {
             switch (game.btn) {
