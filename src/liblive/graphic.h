@@ -34,5 +34,6 @@ void print_field(Grid grid, char symbol);
 void print_filed_v2(Grid grid, char symbol);
 int get_center(int size, char *str);
 void create_menu(GameStatus *game);
-void draw_btns(GameStatus* game);
-void* input_thread(void* arg);
+void draw_btns(GameStatus *game);
+void *input_thread(void *arg);
+void *start_game(void *arg);

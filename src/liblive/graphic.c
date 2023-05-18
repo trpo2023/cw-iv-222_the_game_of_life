@@ -120,7 +120,6 @@ void draw_btns(GameStatus* game)
     }
 }
 
-
 void* input_thread(void* arg)
 {
     GameStatus* game = (GameStatus*)arg;
@@ -188,4 +187,28 @@ void* input_thread(void* arg)
         refresh();
     }
     return 0;
+}
+
+void* start_game(void* arg)
+{
+    GameThread* get_arg = (GameThread*)arg;
+    GameStatus* game = get_arg->game;
+    Grid grid = get_arg->grid;
+    Grid tmp = init_grid(grid.rows, grid.columns);
+
+    while (true) {
+        usleep(100000);
+        if (game->pressed && game->location == L_MENU && game->btn == B_EXIT) {
+            free_grid(tmp);
+            return 0;
+        }
+        if (game->location != L_GAME)
+            continue;
+
+        clear();
+        print_filed_v2(grid, '*');
+        draw_btns(game);
+        refresh();
+        update_grid(grid, tmp);
+    }
 }
