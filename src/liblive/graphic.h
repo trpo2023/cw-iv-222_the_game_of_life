@@ -8,12 +8,8 @@ typedef struct GameStatus {
     int rows, columns;
     int location, btn;
     int pressed;
-} GameStatus;
-
-typedef struct GameThread {
-    GameStatus *game;
     Grid grid;
-} GameThread;
+} GameStatus;
 
 typedef struct Btn {
     char *name;

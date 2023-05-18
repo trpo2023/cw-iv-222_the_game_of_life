@@ -22,17 +22,15 @@ int main()
     curs_set(0);
     /*/ Инициализация переменных /*/
     pthread_t th_input, th_game;
-    int rows, columns;
-    getmaxyx(stdscr, rows, columns);
-    GameStatus game = {rows, columns - MENU_SIZE, L_MENU, B_START, 0};
-    Grid grid = init_grid(game.rows, game.columns / 2);
+    int row, col;
+    getmaxyx(stdscr, row, col);
+    Grid grid = init_grid(row, (col - MENU_SIZE) / 2);
     rand_grid(grid);
-
+    GameStatus game = {row, col, L_MENU, B_START, 0, grid};
     /*/ создаем поток для обработки пользовательского ввода /*/
     pthread_create(&th_input, NULL, input_thread, &game);
     /*/ создаем поток для игры /*/
-    GameThread th_arg = {&game, grid};
-    pthread_create(&th_game, NULL, start_game, &th_arg);
+    pthread_create(&th_game, NULL, start_game, &game);
     while (true) {
         if (game.pressed == 1) {
             switch (game.btn) {
@@ -64,11 +62,14 @@ int main()
                 break;
             }
         }
+        getmaxyx(stdscr, row, col); // получаем размер окна (стандартный экран)
+        game.rows = row;
+        game.columns = col;
         clear();
         draw_btns(&game);
         print_filed_v2(grid, '*');
         refresh();
-        usleep(100000);
+        usleep(100007);
     }
 
     return 0;
