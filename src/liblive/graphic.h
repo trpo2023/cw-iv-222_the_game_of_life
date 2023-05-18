@@ -18,7 +18,19 @@ enum menu_btns {
     B_SAVE,
 };
 
+typedef struct GameThread {
+    GameStatus *game;
+    Grid grid;
+} GameThread;
+
+typedef struct Btn {
+    char *name;
+    int id;
+} Btn;
+
 double wtime();
 int get_live_count(Grid grid);
 void print_field(Grid grid, char symbol);
 void print_filed_v2(Grid grid, char symbol);
+int get_center(int size, char *str);
+void create_menu(GameStatus *game);

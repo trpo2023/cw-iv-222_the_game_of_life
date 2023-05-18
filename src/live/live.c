@@ -29,6 +29,12 @@ int main()
     Grid grid = init_grid(game.rows, game.columns / 2);
     rand_grid(grid);
 
+    /*/ создаем поток для обработки пользовательского ввода /*/
+    pthread_create(&th_input, NULL, input_thread, &game);
+    /*/ создаем поток для игры /*/
+    GameThread th_arg = {&game, grid};
+    pthread_create(&th_game, NULL, start_game, &th_arg);
+
     // Очистка ncurses и завершение программы
     endwin();
     return 0;
