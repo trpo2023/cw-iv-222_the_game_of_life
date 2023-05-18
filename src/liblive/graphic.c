@@ -59,3 +59,8 @@ void create_menu(GameStatus* game)
         mvprintw(row, game->columns, "|");
     }
 }
+
+int get_center(int size, char* str)
+{
+    return size / 2 - strlen(str) / 2;
+}
