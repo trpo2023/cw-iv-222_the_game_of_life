@@ -21,41 +21,7 @@ int main()
     mouseinterval(0);
     curs_set(0);
 
-    int y, x;
-    // Цикл чтения событий мыши и клавиатуры
-    int ch;
-    MEVENT event;
-    while ((ch = getch()) != KEY_F(1)) {
-        switch (ch) {
-        case KEY_UP:
-            mvprintw(1, 0, "UP   ");
-            break;
-        case KEY_DOWN:
-            mvprintw(1, 0, "DOWN ");
-            break;
-        case '\n':
-            mvprintw(1, 0, "ENTER");
-            break;
-        case KEY_ESC:
-            mvprintw(1, 0, "ESC  ");
-            break;
-        case KEY_MOUSE:
-            getmouse(&event);
-            int x = event.x;
-            int y = event.y;
-            mvprintw(2, 0, "MOUSE: (%d %d)     ", x, y);
-            break;
-        default:
-            break;
-        }
-        getmaxyx(stdscr, y, x); // получаем размер окна (стандартный экран)
-        mvprintw(
-                0,
-                0,
-                "console size: %d %d     ",
-                y,
-                x); // выводим размер консоли
-    }
+   
 
     // Очистка ncurses и завершение программы
     endwin();

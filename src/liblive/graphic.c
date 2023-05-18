@@ -43,3 +43,19 @@ int get_live_count(Grid grid)
     return count;
 }
 
+void print_filed_v2(Grid grid, char symbol)
+{
+    for (uint32_t row = 0; row < grid.rows; row++) {
+        for (uint32_t column = 0; column < grid.columns; column++) {
+            if (grid.field[row][column])
+                mvprintw(row, column * 2, "%c", symbol);
+        }
+    }
+}
+
+void create_menu(GameStatus* game)
+{
+    for (int row = 0; row < game->rows; row++) {
+        mvprintw(row, game->columns, "|");
+    }
+}
