@@ -64,3 +64,58 @@ int get_center(int size, char* str)
 {
     return size / 2 - strlen(str) / 2;
 }
+
+int get_center(int size, char* str)
+{
+    return size / 2 - strlen(str) / 2;
+}
+
+void draw_btns(GameStatus* game)
+{
+    create_menu(game);
+    char* location_name;
+    Btn btns[10];
+    int count;
+    switch (game->location) {
+    case L_MENU:
+        location_name = "Menu";
+        btns[0].name = "Start";
+        btns[0].id = B_START;
+        btns[1].name = "Settings";
+        btns[1].id = B_SETTINGS;
+        btns[2].name = "Exit";
+        btns[2].id = B_EXIT;
+        count = 3;
+        break;
+    case L_GAME:
+        location_name = "Game";
+        btns[0].name = "Restart";
+        btns[0].id = B_RESTART;
+        btns[1].name = "Back";
+        btns[1].id = B_BACK;
+        count = 2;
+        break;
+    case L_SETTINGS:
+        location_name = "Settings";
+        btns[0].name = "Save";
+        btns[0].id = B_SAVE;
+        btns[1].name = "Back";
+        btns[1].id = B_BACK;
+        count = 2;
+        break;
+    default:
+        return;
+    }
+    int center = game->columns + get_center(MENU_SIZE, location_name);
+    mvprintw(0, center, "%s", location_name);
+
+    int center_row = (game->rows - count) / 2;
+    for (int i = 0; i < count; i++) {
+        if (game->btn == btns[i].id) {
+            mvprintw(center_row + i, game->columns + 1, ">", game->btn);
+            mvprintw(center_row + i, game->columns + MENU_SIZE - 1, "<");
+        }
+        int center = game->columns + get_center(MENU_SIZE, btns[i].name);
+        mvprintw(center_row + i, center, "%s", btns[i].name);
+    }
+}
