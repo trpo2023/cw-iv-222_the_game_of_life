@@ -26,16 +26,30 @@ Grid init_grid(uint32_t rows, uint32_t columns)
 int count_neighbors(Grid grid, uint32_t row, uint32_t column)
 {
     int count = 0;
-    for (uint32_t r = row - 1; r <= row + 1; r++) {
-        for (uint32_t c = column - 1; c <= column + 1; c++) {
-            if (r == row && c == column)
-                continue;
-            if (r < grid.rows && c < grid.columns) {
-                if (grid.field[r][c] == 1)
-                    count++;
-            }
-        }
-    }
+    if (row > 0)
+        count += grid.field[row - 1][column]; // top
+
+    if (column > 0)
+        count += grid.field[row][column - 1]; // left
+
+    if (row < grid.rows - 1)
+        count += grid.field[row + 1][column]; // bottom
+
+    if (column < grid.columns - 1)
+        count += grid.field[row][column + 1]; // right
+
+    if (row > 0 && column > 0)
+        count += grid.field[row - 1][column - 1]; // top left
+
+    if (row > 0 && column < grid.columns - 1)
+        count += grid.field[row - 1][column + 1]; // top right
+
+    if (row < grid.rows - 1 && column > 0)
+        count += grid.field[row + 1][column - 1]; // bottom left
+
+    if (row < grid.rows - 1 && column < grid.columns - 1)
+        count += grid.field[row + 1][column + 1]; // bottom right
+
     return count;
 }
 
