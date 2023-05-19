@@ -60,7 +60,7 @@ void print_filed_v2(Grid grid, char symbol)
 void create_menu(GameStatus* game)
 {
     for (int row = 0; row < game->rows; row++) {
-        mvprintw(row, game->columns, "|");
+        mvprintw(row, game->columns - MENU_SIZE, "|");
     }
 }
 
@@ -96,25 +96,29 @@ void draw_btns(GameStatus* game)
         break;
     case L_SETTINGS:
         location_name = "Settings";
-        btns[0].name = "Save";
-        btns[0].id = B_SAVE;
-        btns[1].name = "Back";
-        btns[1].id = B_BACK;
-        count = 2;
+        btns[0].name = "Back";
+        btns[0].id = B_BACK;
+        count = 1;
         break;
     default:
         return;
     }
-    int center = game->columns + get_center(MENU_SIZE, location_name);
+    int center
+            = game->columns - MENU_SIZE + get_center(MENU_SIZE, location_name);
     mvprintw(0, center, "%s", location_name);
 
     int center_row = (game->rows - count) / 2;
     for (int i = 0; i < count; i++) {
         if (game->btn == btns[i].id) {
-            mvprintw(center_row + i, game->columns + 1, ">", game->btn);
-            mvprintw(center_row + i, game->columns + MENU_SIZE - 1, "<");
+            mvprintw(
+                    center_row + i,
+                    game->columns - MENU_SIZE + 1,
+                    ">",
+                    game->btn);
+            mvprintw(center_row + i, game->columns - 1, "<");
         }
-        int center = game->columns + get_center(MENU_SIZE, btns[i].name);
+        int center = game->columns - MENU_SIZE
+                + get_center(MENU_SIZE, btns[i].name);
         mvprintw(center_row + i, center, "%s", btns[i].name);
     }
 }
@@ -122,8 +126,8 @@ void draw_btns(GameStatus* game)
 void* input_thread(void* arg)
 {
     GameStatus* game = (GameStatus*)arg;
-    int columns, rows;
     int ch;
+    int oldx = 0, oldy = 0;
     MEVENT event;
     while ((ch = getch()) != KEY_F(1)) {
         switch (ch) {
@@ -146,14 +150,6 @@ void* input_thread(void* arg)
                     && (game->btn < B_BACK))
                     game->btn += 1;
                 break;
-            case L_SETTINGS:
-                if (ch == KEY_UP && (game->btn > B_BACK)
-                    && (game->btn <= B_SAVE))
-                    game->btn -= 1;
-                if (ch == KEY_DOWN && (game->btn >= B_BACK)
-                    && (game->btn < B_SAVE))
-                    game->btn += 1;
-                break;
 
             default:
                 break;
@@ -170,19 +166,24 @@ void* input_thread(void* arg)
             game->pressed = 1;
             return 0;
         case KEY_MOUSE:
-            getmouse(&event);
-            // int x = event.x;
-            // int y = event.y;
+            if (game->location == L_SETTINGS) {
+                getmouse(&event);
+                int x = event.x / 2;
+                int y = event.y;
+                if (x == oldx && y == oldy)
+                    break;
+                if ((int)game->grid.rows > y && (int)game->grid.columns > x) {
+                    if (game->grid.field[y][x] == 1)
+                        game->grid.field[y][x] = 0;
+                    else
+                        game->grid.field[y][x] = 1;
+                }
+                oldx = x, oldy = y;
+            }
             break;
         default:
             break;
         }
-        getmaxyx(
-                stdscr,
-                rows,
-                columns); // получаем размер окна (стандартный экран)
-        game->rows = rows;
-        game->columns = columns - MENU_SIZE;
         refresh();
     }
     return 0;
@@ -190,24 +191,15 @@ void* input_thread(void* arg)
 
 void* start_game(void* arg)
 {
-    GameThread* get_arg = (GameThread*)arg;
-    GameStatus* game = get_arg->game;
-    Grid grid = get_arg->grid;
-    Grid tmp = init_grid(grid.rows, grid.columns);
+    GameStatus* game = (GameStatus*)arg;
 
     while (true) {
         usleep(100000);
         if (game->pressed && game->location == L_MENU && game->btn == B_EXIT) {
-            free_grid(tmp);
             return 0;
         }
         if (game->location != L_GAME)
             continue;
-
-        clear();
-        print_filed_v2(grid, '*');
-        draw_btns(game);
-        refresh();
-        update_grid(grid, tmp);
+        update_grid(game->grid);
     }
 }
