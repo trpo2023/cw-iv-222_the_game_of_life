@@ -198,11 +198,6 @@ void* start_game(void* arg)
         }
         if (game->location != L_GAME)
             continue;
-
-        clear();
-        print_filed_v2(game->grid, '*');
-        draw_btns(game);
-        refresh();
         update_grid(game->grid);
     }
 }
