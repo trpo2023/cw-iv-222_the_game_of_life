@@ -170,7 +170,7 @@ void* input_thread(void* arg)
                 getmouse(&event);
                 int x = event.x / 2;
                 int y = event.y;
-                if(x == oldx && y == oldy)
+                if (x == oldx && y == oldy)
                     break;
                 if ((int)game->grid.rows > y && (int)game->grid.columns > x) {
                     if (game->grid.field[y][x] == 1)

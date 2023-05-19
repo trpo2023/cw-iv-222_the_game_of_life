@@ -12,7 +12,6 @@
 int main()
 {
     /*/  Инициализация ncurses /*/
-
     initscr();
     cbreak();
     noecho();
