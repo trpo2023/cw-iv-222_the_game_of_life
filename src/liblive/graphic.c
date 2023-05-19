@@ -96,11 +96,9 @@ void draw_btns(GameStatus* game)
         break;
     case L_SETTINGS:
         location_name = "Settings";
-        btns[0].name = "Save";
-        btns[0].id = B_SAVE;
-        btns[1].name = "Back";
-        btns[1].id = B_BACK;
-        count = 2;
+        btns[0].name = "Back";
+        btns[0].id = B_BACK;
+        count = 1;
         break;
     default:
         return;
@@ -129,6 +127,7 @@ void* input_thread(void* arg)
 {
     GameStatus* game = (GameStatus*)arg;
     int ch;
+    int oldx = 0, oldy = 0;
     MEVENT event;
     while ((ch = getch()) != KEY_F(1)) {
         switch (ch) {
@@ -151,14 +150,6 @@ void* input_thread(void* arg)
                     && (game->btn < B_BACK))
                     game->btn += 1;
                 break;
-            case L_SETTINGS:
-                if (ch == KEY_UP && (game->btn > B_BACK)
-                    && (game->btn <= B_SAVE))
-                    game->btn -= 1;
-                if (ch == KEY_DOWN && (game->btn >= B_BACK)
-                    && (game->btn < B_SAVE))
-                    game->btn += 1;
-                break;
 
             default:
                 break;
@@ -175,9 +166,20 @@ void* input_thread(void* arg)
             game->pressed = 1;
             return 0;
         case KEY_MOUSE:
-            getmouse(&event);
-            // int x = event.x;
-            // int y = event.y;
+            if (game->location == L_SETTINGS) {
+                getmouse(&event);
+                int x = event.x / 2;
+                int y = event.y;
+                if(x == oldx && y == oldy)
+                    break;
+                if ((int)game->grid.rows > y && (int)game->grid.columns > x) {
+                    if (game->grid.field[y][x] == 1)
+                        game->grid.field[y][x] = 0;
+                    else
+                        game->grid.field[y][x] = 1;
+                }
+                oldx = x, oldy = y;
+            }
             break;
         default:
             break;

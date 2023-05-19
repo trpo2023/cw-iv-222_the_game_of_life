@@ -42,6 +42,8 @@ int main()
                 break;
             case B_SETTINGS:
                 game.pressed = 0;
+                game.location = L_SETTINGS;
+                game.btn = B_BACK;
                 break;
             case B_RESTART:
                 game.pressed = 0;
