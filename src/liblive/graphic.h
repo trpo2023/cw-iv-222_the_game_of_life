@@ -4,9 +4,9 @@
 #define MENU_SIZE 20
 #define KEY_ESC 27
 
-typedef struct GridStatus{
+typedef struct GridStatus {
     int live;
-    //double time;
+    // double time;
 } GridStatus;
 typedef struct GameStatus {
     int rows, columns;
@@ -17,7 +17,7 @@ typedef struct GameStatus {
 } GameStatus;
 
 typedef struct Btn {
-    char* name;
+    char *name;
     int id;
 } Btn;
 
@@ -32,11 +32,11 @@ enum menu_btns {
 };
 
 double wtime();
-int get_center(int size, char* str);
+int get_center(int size, char *str);
 int get_live_count(Grid grid);
 void print_field(Grid grid, char symbol);
 void print_filed_v2(Grid grid, char symbol);
-void create_menu(GameStatus* game);
-void draw_btns(GameStatus* game);
-void* input_thread(void* arg);
-void* start_game(void* arg);
+void create_menu(GameStatus *game);
+void draw_btns(GameStatus *game);
+void *input_thread(void *arg);
+void *start_game(void *arg);
