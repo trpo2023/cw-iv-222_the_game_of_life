@@ -1,13 +1,9 @@
-#include <liblive/graphic.h>
-#include <liblive/logic.h>
 #include <ncurses.h>
 #include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
 
-#define KEY_ESC 27
+#include <liblive/graphic.h>
+#include <liblive/logic.h>
 
 int main()
 {
@@ -79,13 +75,13 @@ int main()
         game.info.time = wtime() - time;
         if (timer_show)
             mvprintw(
-                    game.rows / 4,
+                    1,
                     game.columns - MENU_SIZE + 1,
                     "Time: %.1f",
                     game.info.time);
         game.info.live = get_live_count(grid);
         mvprintw(
-                game.rows / 3,
+                2,
                 game.columns - MENU_SIZE + 1,
                 "Living cells: %d",
                 game.info.live);
