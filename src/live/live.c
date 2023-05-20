@@ -71,7 +71,11 @@ int main()
         draw_btns(&game);
         print_filed_v2(grid, '*');
         game.info.live = get_live_count(grid);
-        mvprintw(game.rows / 3, game.columns - MENU_SIZE + 1, "Living cells: %d", game.info.live);
+        mvprintw(
+                game.rows / 3,
+                game.columns - MENU_SIZE + 1,
+                "Living cells: %d",
+                game.info.live);
         refresh();
         usleep(100007);
     }

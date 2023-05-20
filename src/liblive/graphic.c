@@ -200,7 +200,7 @@ void* start_game(void* arg)
         }
         if (game->location != L_GAME)
             continue;
-        game->info.live ++;
+        game->info.live++;
         update_grid(game->grid);
     }
 }
