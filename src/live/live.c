@@ -26,15 +26,19 @@ int main()
     getmaxyx(stdscr, row, col);
     Grid grid = init_grid(row, (col - MENU_SIZE) / 2);
     rand_grid(grid);
-    GameStatus game = {row, col, L_MENU, B_START, 0, grid, {0}};
+    GameStatus game = {row, col, L_MENU, B_START, 0, grid, {0, 0}};
     /*/ создаем поток для обработки пользовательского ввода /*/
     pthread_create(&th_input, NULL, input_thread, &game);
     /*/ создаем поток для игры /*/
     pthread_create(&th_game, NULL, start_game, &game);
+    bool timer_show = false;
+    double time = 0;
     while (true) {
         if (game.pressed == 1) {
             switch (game.btn) {
             case B_START:
+                time = wtime();
+                timer_show = true;
                 game.pressed = 0;
                 game.location = L_GAME;
                 game.btn = B_RESTART;
@@ -45,10 +49,12 @@ int main()
                 game.btn = B_BACK;
                 break;
             case B_RESTART:
+                time = wtime();
                 game.pressed = 0;
                 rand_grid(grid);
                 break;
             case B_BACK:
+                timer_show = false;
                 game.pressed = 0;
                 game.location = L_MENU;
                 game.btn = B_START;
@@ -69,7 +75,14 @@ int main()
         game.columns = col;
         clear();
         draw_btns(&game);
-        print_filed_v2(grid, '*');
+        print_filed_v2(grid, '?');
+        game.info.time = wtime() - time;
+        if (timer_show)
+            mvprintw(
+                    game.rows / 4,
+                    game.columns - MENU_SIZE + 1,
+                    "Time: %.1f",
+                    game.info.time);
         game.info.live = get_live_count(grid);
         mvprintw(
                 game.rows / 3,

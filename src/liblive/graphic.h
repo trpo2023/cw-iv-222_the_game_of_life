@@ -1,12 +1,11 @@
 #pragma once
 #include <liblive/logic.h>
-
 #define MENU_SIZE 20
 #define KEY_ESC 27
 
 typedef struct GridStatus {
     int live;
-    // double time;
+    double time;
 } GridStatus;
 typedef struct GameStatus {
     int rows, columns;
