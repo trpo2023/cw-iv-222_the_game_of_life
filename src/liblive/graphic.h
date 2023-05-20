@@ -4,11 +4,16 @@
 #define MENU_SIZE 20
 #define KEY_ESC 27
 
+typedef struct GridStatus{
+    int live;
+    //double time;
+} GridStatus;
 typedef struct GameStatus {
     int rows, columns;
     int location, btn;
     int pressed;
     Grid grid;
+    GridStatus info;
 } GameStatus;
 
 typedef struct Btn {

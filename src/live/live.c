@@ -26,7 +26,7 @@ int main()
     getmaxyx(stdscr, row, col);
     Grid grid = init_grid(row, (col - MENU_SIZE) / 2);
     rand_grid(grid);
-    GameStatus game = {row, col, L_MENU, B_START, 0, grid};
+    GameStatus game = {row, col, L_MENU, B_START, 0, grid, {0}};
     /*/ создаем поток для обработки пользовательского ввода /*/
     pthread_create(&th_input, NULL, input_thread, &game);
     /*/ создаем поток для игры /*/
@@ -70,6 +70,8 @@ int main()
         clear();
         draw_btns(&game);
         print_filed_v2(grid, '*');
+        game.info.live = get_live_count(grid);
+        mvprintw(game.rows / 3, game.columns - MENU_SIZE + 1, "Living cells: %d", game.info.live);
         refresh();
         usleep(100007);
     }
